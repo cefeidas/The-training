@@ -1,108 +1,337 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# The Training
 
-Welcome cefeidas,
+An online strategy game where you must find the correct combinations of skills to defeat the dragon.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+## Table of Contents
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+- [Game Description](#game-description)
+  - [JavaScript Functions](#javascript-functions)
+  - [Game Summary](#game-summary)
+- [Gameplay](#gameplay)
+- [Technologies Used](#technologies-used)
+- [License](#license)
 
-## Gitpod Reminders
+## Game Description
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+The game is designed as a short comic book, using static images that will slide or loop to guide the player through the narrative. The first part is a loop where the player is presented with the title and a message advising them to click anywhere to continue the game flow. Once the player clicks, they will be directed to a new HTML page containing a slideshow to tell the story. The hero and the dragon will be introduced, and the player will understand their task: The hero must train for four months to gain the necessary skills to defeat the dragon.
+At the end of the slideshow, the user will be prompted to click anywhere again to be directed to the next page. The next page will be the game itself, where the user will be asked to fill out a form specifying which four skills they want to train. Once the player chooses, they can click the “submit button” with the value: “Let’s fight the dragon!”.
+The following results are expected:
+- If the total number of selected skill points is less than four, an alert message will pop up: “Please spend all your available points!”
+- If the total number of selected skill points is more than four, an alert message will pop up: “Please ensure all your points combined are not greater than 4!”
+- If the total number of selected skill points is exactly 4, the player will be directed to a slideshow where a turn-based battle between the hero and the dragon will take place. Only one of the possible battles will result in the victory of the hero.
+At the end of the slideshow, a message will prompt the player to click anywhere. This way, they will be redirected to the first page again.
+# javascript-functions:
+The game uses the following JavaScript functions:
 
-`python3 -m http.server`
+muteOrUnmute(audioFiles)
+This function allows the user to mute or unmute every audio file in the game by using an array of audio file items. Here's the code for the function:
+function muteOrUnmute(audioFiles) {
+  for (let i = 0; i < audioFiles.length; i++) {
+    audioFiles[i].muted = !audioFiles[i].muted;
+  }
+}
+function showSlidesLoop(myArray)
+This function will trigger every time a loop of slides is needed.
+function showSlidesLoop(myArray) {
+    for (let i=0; i < myArray.length; i++) {
+        myArray[i].style.display = 'none';
+    }
+    slideIndex++;
+    if(slideIndex > myArray.length) {
+        slideIndex = 1;
+    }
+    myArray[slideIndex-1].style.display = 'block'
+    setTimeout(() => showSlidesLoop(myArray), 2000) 
+}
+function showSlides(myArray) 
+This function will trigger every time a loop of slides is needed.
 
-A blue button should appear to click: _Make Public_,
 
-Another blue button should appear to click: _Open Browser_.
+function showSlides(myArray) {
+  for (let i = 0; i < myArray.length; i++) {
+      myArray[i].style.display = 'none';
+  }
+  slideIndex++;
+  if (slideIndex > myArray.length) {
+      slideIndex = myArray.length;
+  }
+  myArray[slideIndex - 1].style.display = 'block';
+  if (slideIndex < myArray.length) {
+      setTimeout(() => showSlides(myArray), 2000);
+  }
+}
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+function checkFormInputs(event)
+This function will trigger when the results of the form are submitted, and will be responsible for the alerts if the provided data in the form is incorrect, or to redirect the user to the appropriate page.
+function checkFormInputs(event) {
+  event.preventDefault();
+  let damage = form.elements['damage'].value;
+  let speed = form.elements['speed'].value;
+  let magic = form.elements['magic'].value;
+  if ((parseInt(damage) + parseInt(speed) + parseInt(magic)) > 4) {
+    let errorDiv = document.getElementById('errors');
+    errorDiv.innerHTML = "<p>Please ensure all your points combined are not greater than 4!</p>";
+    errorDiv.style.display = 'block';
+  } else if ((parseInt(damage) + parseInt(speed) + parseInt(magic)) < 4) {
+    let errorDiv = document.getElementById('errors');
+    errorDiv.innerHTML = "<p>Please spend all your available points!</p>";
+    errorDiv.style.display = 'block';
+  } else if (damage === '3' && speed === '1' && magic === '0'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='310.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '3' && speed === '1' && magic === '0'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='310.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '3' && speed === '0' && magic === '1'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='301.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '2' && speed === '2' && magic === '0'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='220.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '2' && speed === '1' && magic === '1'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='211.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '2' && speed === '0' && magic === '2'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='202.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '1' && speed === '3' && magic === '0'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='130.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '1' && speed === '2' && magic === '1'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='121.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '1' && speed === '1' && magic === '2'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='112.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '1' && speed === '0' && magic === '3'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='103.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '0' && speed === '3' && magic === '1'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='031.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '0' && speed === '2' && magic === '2'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='022.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  } else if (damage === '0' && speed === '1' && magic === '3'){
+    let battleStats = document.getElementById('battleStats');
+    battleStats.innerHTML = "<a href='310.html'>Let's see how the battle went!</a>";
+    battleStats.style.display = 'block';
+  }
+}
 
-A blue button should appear to click: _Make Public_,
 
-Another blue button should appear to click: _Open Browser_.
+## Game Summary
+The game is a puzzle game where the player must use trial and error to deduce the inner rules of the game. The objective is to find the perfect combination of skill points in order to defeat the opponent.
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+# Inner Rules
+You have 4 months to train.
+Every month gives you 1 skill point.
+You master a skill in 3 months.
+Skills
+Damage
+You start dealing 1 hit point each turn.
+Each extra point allows you to deal +1 points of damage.
+Speed
+You start attacking once per turn.
+If you spend 1 point in speed, you deal one extra attack every 3 turns.
+If you spend 2 points in speed, you deal one extra attack every 2 turns.
+If you spend 3 points in speed, you deal one extra attack every turn.
+Magic
+You start with no magic.
+If you spend 1 point in magic, you cast a weak spell every 3 turns (you deal 2 points of damage).
+If you spend 2 points in magic, you cast a medium spell every 3 turns (you deal 4 points of magic).
+If you spend 3 points in magic, you cast a great spell every 3 turns (you deal 4 points of damage and heal 4 points).
+Note: A very succinct version of these rules was developed in the early stages of development and can be found below.
 
-To log into the Heroku toolbelt CLI:
+</head>
+<body>
+    <script>
+        // Declare prompt variables
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+        let attack;
+        let speed;
+        let magic;
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+        attack = parseInt(prompt('Attack: ', '0'), 10);
+        speed = parseInt(prompt('Speed: ', '0'), 10);
+        magic = parseInt(prompt('Magic: ', '0'), 10);
 
-------
 
-## Release History
+        // Declare action-turn variables
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+        let hero_initial_health_points;
+        let dragon_initial_health_points;
+        let turn_one_hero_deals_damage;
+        let turn_one_dragon_deals_damage;
+        let turn_one_hero_health_points;
+        let turn_one_dragon_health_points;
+        let turn_two_hero_deals_damage;
+        let turn_two_dragon_deals_damage;
+        let turn_two_hero_health_points;
+        let turn_two_dragon_health_points;
+        let turn_three_hero_deals_damage;
+        let turn_three_hero_magic_damage;
+        let turn_three_hero_attack_damage;
+        let turn_three_dragon_deals_damage;
+        let turn_three_hero_healing_spell;
+        let turn_three_hero_health_points;
+        let turn_three_dragon_health_points;
+        let turn_four_hero_deals_damage;
+        let turn_four_dragon_deals_damage;
+        let turn_four_hero_health_points;
+        let turn_four_dragon_health_points;
+        let turn_five_hero_deals_damage;
+        let turn_five_dragon_deals_damage;
+        let turn_five_hero_health_points;
+        let turn_five_dragon_health_points;
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+        // Define Initial Status
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+        hero_initial_health_points = 5;
+        console.log('Hero initial health: ' + hero_initial_health_points);
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+        dragon_initial_health_points = 15;
+        console.log('Dragon initial health: ' + dragon_initial_health_points);
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+        // Define Turn One Actions
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+        if (speed == 3) {
+            turn_one_hero_deals_damage = 2* (attack + 1);
+        } else {
+            turn_one_hero_deals_damage = attack + 1;
+        }
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+        turn_one_dragon_deals_damage = 2
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+        turn_one_hero_health_points = 5 - turn_one_dragon_deals_damage;
+        turn_one_dragon_health_points = 15 - turn_one_hero_deals_damage;
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+        console.log('Hero Health Points after turn one: ' + turn_one_hero_health_points);
+        console.log('Dragon Health Points after turn one: ' + turn_one_dragon_health_points);
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+        // Define Turn-Two Actions
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+        if (speed == 3 || speed == 2) {
+            turn_two_hero_deals_damage = 2* (attack + 1);
+        } else {
+            turn_two_hero_deals_damage = attack + 1;
+        }
+        turn_two_dragon_deals_damage = 2;
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+        turn_two_hero_health_points = turn_one_hero_health_points - turn_two_dragon_deals_damage;
+        turn_two_dragon_health_points = turn_one_dragon_health_points - turn_two_hero_deals_damage;
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+        console.log('Hero Health Points after turn two: ' + turn_two_hero_health_points);
+        console.log('Dragon Health Points after turn two: ' + turn_two_dragon_health_points);
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+        // Define Turn-Three Actions
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+        if (speed == 1 || speed == 3) {
+            turn_three_hero_attack_damage = 2* (attack + 1);
+        } else {
+            turn_three_hero_attack_damage = attack + 1;
+        }
+        if (magic == 1) {
+            turn_three_hero_magic_damage = 2;
+        } else if (magic == 2 || magic == 3 ) {
+            turn_three_hero_magic_damage = 4;
+        } else {
+            turn_three_hero_magic_damage = 0;
+        }
+        if (magic == 3) {
+            turn_three_hero_healing_spell = 4;
+        } else {
+            turn_three_hero_healing_spell = 0;
+        }
 
-------
 
-## FAQ about the uptime script
+        turn_three_hero_deals_damage = turn_three_hero_attack_damage + turn_three_hero_magic_damage;
+        turn_three_dragon_deals_damage = 2;
 
-**Why have you added this script?**
+        turn_three_hero_health_points = turn_two_hero_health_points - turn_three_dragon_deals_damage + turn_three_hero_healing_spell;
+        turn_three_dragon_health_points = turn_two_dragon_health_points - turn_three_hero_deals_damage;
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+        console.log('Hero Health Points after turn three: ' + turn_three_hero_health_points);
+        console.log('Dragon Health Points after turn three: ' + turn_two_dragon_health_points);
 
-**How will this affect me?**
+        // Define Turn-Four Actions
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+        if (speed == 3 || speed == 2) {
+            turn_four_hero_deals_damage = 2* (attack + 1);
+        } else {
+            turn_four_hero_deals_damage = attack + 1;
+        }
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+        turn_four_dragon_deals_damage = 2
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+        turn_four_hero_health_points = turn_three_hero_health_points - turn_four_dragon_deals_damage;
+        turn_four_dragon_health_points = turn_three_dragon_health_points - turn_four_hero_deals_damage;
 
-**So….?**
+        console.log('Hero Health Points after turn four: ' + turn_four_hero_health_points);
+        console.log('Dragon Health Points after turn four: ' + turn_four_dragon_health_points);
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+        // Define Turn-Five Actions
 
-**Can I opt out?**
+        if (speed == 3)  {
+            turn_five_hero_deals_damage = 2* (attack + 1);
+        } else {
+            turn_five_hero_deals_damage = attack + 1;
+        }
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+        turn_five_dragon_deals_damage = 2
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+        turn_five_hero_health_points = turn_four_hero_health_points - turn_five_dragon_deals_damage;
+        turn_five_dragon_health_points = turn_four_dragon_health_points - turn_five_hero_deals_damage;
 
-**Anything more?**
+        console.log('Hero Health Points after turn five: ' + turn_five_hero_health_points);
+        console.log('Dragon Health Points after turn five: ' + turn_five_dragon_health_points);
+    </script>
+</body>
+</html>
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+## Gameplay
 
----
+Playing the game is as simple as opening it on a browser and following the instructions. To advance the game flow, you just need to click anywhere when prompted. Once you reach the form page, you need to fill it out according to the instructions and click to see the results. Here is a more detailed explanation of all game features:
+# Index page:
+On the index page, you have a loop and three options. You can click on the top-left corner to unmute the music, click the credits button to see a slideshow with all the credits, or click anywhere to be redirected to introVideo.html.
+# Credits:
+On the credits page, you will see a slideshow with the credits. You can exit this page by clicking the last image.
+# introVideo:
+On the introVideo page, you will see a slideshow with a brief narrative of the game. You can advance to the next page by clicking the last image.
+# form.
+On the form page, you will be asked to choose where to use your 4 available skill points
+# battle pages:
+Depending on your chosen combination of skills, you will be redirected to a different page. There are a total of 12 different valid combinations, each leading to a set of turns that represent the rules explained earlier. At the end of this slideshow, you can click on the last image to return to the main page.
 
-Happy coding!
+## Technologies Used
+
+The following platforms were used to document my work:
+# Stack Overflow:
+I researched examples of a mute/unmute button, slideshows, and working with arrays.
+# w3schools
+I learned about arrays, the function Array.from(), foreach(), and the differences between an array, an HTML collection, and a node list, and how to work with each one correctly. It took me some time to understand these concepts. 
+# slack
+I resolved some doubts and received help from the community here.
+# Google Chrome Developer tools
+I ensured my program looked good on every computer size, and there were no errors, other than some undefined properties that would defined later on (on another html file)
+# pixl
+I used pixl to edit the images. I used some of the fonts, images and resources including in this program.
+
+## License
+My game uses images and music from creative commons sources.
+
+- The images: All images were created by upklyak and are available on Freepik.
+- The battle effects: I used some effects to add to the battle. These effects are images found on opengames.org, uploaded by BenHickling, MetaShinryu, and cdgramos.
+- The music: The three different music files were obtained from Opengames.org, uploaded by the user "spring spring".
