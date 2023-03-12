@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Little game. Design the most lethal warrior to defeat the monster">
+    <meta name="keywords" content="video game, fantasy, combinations, stats, happyville, monsterville">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/libraries.css">
+    <title>Happy Ville</title>    
+</head>
+<body class ='form'>
+    <audio autoplay loop muted>
+        <source src="assets/audio/theme of happy heart.ogg" type= 'audio/ogg'>
+    </audio>
+    <button type='button' id="button">Click Here to unmute</button>
+    <section>
+        <p><br><br>The training begins:<br>You have 4 months to get back in shape!<br>You can master a skill within three months,<br>
+             so don't waste any more time than that!<br>There is only one successful combination!<br>
+             Will you be able to find it?<br><br>
+             Here are the rules:<br>
+             Choose between 0 and 3 points for each skill.<br>
+             Choose exactly 4 points in total, no more and no less.<br>
+             When you are happy with your choices, click the button below.
+             <br><br></p>
+        
+        <form id="statsForm" >
+            <div class="damage">
+                <label for="damage">Damage</label>
+                <input name="damage" id="damage" type="number" min="0" max="3" required>
+            </div>
+            <div class="speed">
+                <label for="speed">Speed</label>
+                <input name="speed" id="speed" type="number" min="0" max="3" required>
+            </div>
+            <div class="magic">
+                <label for="magic">Magic</label>
+                <input name="magic" id="magic" type="number" min="0" max="3" required>
+              </div>
+              <div id="errors"></div>
+              <br><br>
+              <div class="submit">
+                <input type="submit" value="Let’s fight the dragon!">
+            </div>  
+            <div id='battleStats'>
+
+            </div>                    
+        </form>
+    </section>
+
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
