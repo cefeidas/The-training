@@ -93,3 +93,27 @@ function checkFormInputs(event) {
     battleStats.style.display = 'block';
   }
 }
+
+let slideIndex = 0;
+let battle1 = document.querySelectorAll('.battle1');
+let slides = document.querySelectorAll('.slides');
+let slidesIntro = document.querySelectorAll('.slidesIntro');
+let slidesCredits = document.querySelectorAll('.slidesCredits');
+let audioFiles = document.querySelectorAll('audio');
+let button = document.getElementById("button");
+let intro1 = document.getElementById("intro1");
+let intro2 =document.getElementById("intro2");
+let form = document.getElementById("statsForm");
+
+
+
+
+window.addEventListener("load", () => showSlidesLoop(Array.from(slides)));
+if (window.location.pathname === "/introVideo.html") {
+  window.addEventListener('load', () => showSlides(Array.from(slidesIntro)));
+  }
+  if (window.location.pathname === "/credits.html") {
+    window.addEventListener('load', () => showSlidesLoop(Array.from(slidesCredits)));
+    }
+button.addEventListener("click", () => muteOrUnmute(audioFiles));
+form.addEventListener('submit', checkFormInputs);
